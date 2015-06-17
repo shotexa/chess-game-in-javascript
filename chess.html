@@ -1,0 +1,454 @@
+﻿  <!DOCTYPE html>
+<html>
+<head>
+<title>chess game</title>
+<meta http-equiv="Content-Type" content="text/html, JavaScript" charset="utf-8" />
+<script type="text/javascript" src="chess.js"></script>
+<link type="text/css" rel="stylesheet" href="chess.css"/>
+<style type="text/css">
+body{
+	background-color: #6B6BB2;
+}
+
+
+</style>
+</head>
+<body>
+<div id = "content-wrapper">
+<h1>chess game</h1>
+<div id = "board">
+<div class ="light" id = "a8">  </div>
+<div class ="dark"  id = "b8">  </div>
+<div class ="light" id = "c8">  </div>
+<div class ="dark"  id = "d8">  </div>
+<div class ="light" id = "e8">  </div>
+<div class ="dark"  id = "f8">  </div>
+<div class ="light" id = "g8">  </div>
+<div class ="dark"  id = "h8">  </div>
+<div class ="dark"  id = "a7">  </div>
+<div class ="light" id = "b7">  </div>
+<div class ="dark"  id = "c7">  </div>
+<div class ="light" id = "d7">  </div>
+<div class ="dark"  id = "e7">  </div>
+<div class ="light" id = "f7">  </div>
+<div class ="dark"  id = "g7">  </div>
+<div class ="light" id = "h7">  </div>
+<div class ="light" id = "a6">  </div>
+<div class ="dark"  id = "b6">  </div>
+<div class ="light" id = "c6">  </div>
+<div class ="dark"  id = "d6">  </div>
+<div class ="light" id = "e6">  </div>
+<div class ="dark"  id = "f6">  </div>
+<div class ="light" id = "g6">  </div>
+<div class ="dark"  id = "h6">  </div>
+<div class ="dark"  id = "a5">  </div>
+<div class ="light" id = "b5">  </div>
+<div class ="dark"  id = "c5">  </div>
+<div class ="light" id = "d5">  </div>
+<div class ="dark"  id = "e5">  </div>
+<div class ="light" id = "f5">  </div>
+<div class ="dark"  id = "g5">  </div>
+<div class ="light" id = "h5">  </div>
+<div class ="light" id = "a4">  </div>
+<div class ="dark"  id = "b4">  </div>
+<div class ="light" id = "c4">  </div>
+<div class ="dark"  id = "d4">  </div>
+<div class ="light" id = "e4">  </div>
+<div class ="dark"  id = "f4">  </div>
+<div class ="light" id = "g4">  </div>
+<div class ="dark"  id = "h4">  </div>
+<div class ="dark"  id = "a3">  </div>
+<div class ="light" id = "b3">  </div>
+<div class ="dark"  id = "c3">  </div>
+<div class ="light" id = "d3">  </div>
+<div class ="dark"  id = "e3">  </div>
+<div class ="light" id = "f3">  </div>
+<div class ="dark"  id = "g3">  </div>
+<div class ="light" id = "h3">  </div>
+<div class ="light" id = "a2">  </div>
+<div class ="dark"  id = "b2">  </div>
+<div class ="light" id = "c2">  </div>
+<div class ="dark"  id = "d2">  </div>
+<div class ="light" id = "e2">  </div>
+<div class ="dark"  id = "f2">  </div>
+<div class ="light" id = "g2">  </div>
+<div class ="dark"  id = "h2">  </div>
+<div class ="dark"  id = "a1">  </div>
+<div class ="light" id = "b1">  </div>
+<div class ="dark"  id = "c1">  </div>
+<div class ="light" id = "d1">  </div>
+<div class ="dark"  id = "e1">  </div>
+<div class ="light" id = "f1">  </div>
+<div class ="dark"  id = "g1">  </div>
+<div class ="light" id = "h1">  </div>
+</div>
+<div id = "controlMenu">
+<p id = "blackTimer">00 : 00 : 00</p>
+<p id = "whiteTimer">00 : 00 : 00</p>
+
+
+
+
+</div>
+</div>
+<script >
+
+function setPices()
+{
+	var divs = document.getElementsByTagName("div");
+	for (var i = 0; i < 64; i++)
+	{
+		divs[i+2].innerHTML = '<img src = "empty.png">';
+		var temp = i+2; // just a temporary variable 
+		divs[i+2].setAttribute("onClick", "divclicked("+ temp + ")"); 
+	}
+	var imgs = document.getElementsByTagName("img");
+	for (var i = 0; i < 64; i++)
+	{
+		picename = divs[i+2].id;
+		//set black pawns
+		if (picename.indexOf("7") > -1)
+		{
+			imgs[i].src ="bP.png";
+			continue;
+		}
+		//set white pawns
+		if (picename.indexOf("2") > -1)
+		{
+			imgs[i].src ="wP.png";
+			continue;
+		}
+		//set white queen
+		if (picename.indexOf("d1") > -1)
+		{
+			imgs[i].src ="wQ.png";
+			continue;
+		}
+		//set black queen
+		if (picename.indexOf("d8") > -1)
+		{
+			imgs[i].src ="bQ.png";
+			continue;
+		}
+		//set black king
+		if (picename.indexOf("e8") > -1)
+		{
+			imgs[i].src ="bK.png";
+			continue;
+		}
+        //set white king
+		if (picename.indexOf("e1") > -1)
+		{
+			imgs[i].src ="wK.png";
+			continue;
+		}
+		//set black bishops
+		if (picename.indexOf("c8") > -1)
+		{
+			imgs[i].src ="bB.png";
+			imgs[i + 3].src = "bB.png";
+			continue;
+		}
+		//set white bishops
+		if (picename.indexOf("c1") > -1)
+		{
+			imgs[i].src ="wB.png";
+			imgs[i + 3].src = "wB.png";
+			continue;
+		}
+		//set black knights
+
+		if (picename.indexOf("b8") > -1)
+		{
+			imgs[i].src ="bN.png";
+			imgs[i + 5].src = "bN.png";
+			continue;
+		}
+		//set white knights
+		if (picename.indexOf("b1") > -1)
+		{
+			imgs[i].src ="wN.png";
+			imgs[i + 5].src = "wN.png";
+			continue;
+		}	
+		//set black rocks
+		if (picename.indexOf("a8") > -1)
+		{
+			imgs[i].src ="bR.png";
+			imgs[i + 7].src = "bR.png";
+			continue;
+		}	
+		//set white rocks
+        if (picename.indexOf("a1") > -1)
+ 		{
+			imgs[i].src ="wR.png";
+			imgs[i + 7].src = "wR.png";
+			continue;
+		}	
+	}
+}//function brace
+var color_of_selected_square_before_selection = "not set"; //this global variable will be changed time to time upon moving
+var WhiteCanMove = true;
+var BlackCanMove = false;
+var whiteInterval, blackInterval;
+function divclicked(index)
+{
+ 	var divs = document.getElementsByTagName("div");
+ 	var imgs = document.getElementsByTagName("img"); //imgs = i-2;
+ 	var tempImgSrc = imgs[index - 2].src;
+ 	var imgSrc;
+ 	if (tempImgSrc.indexOf("empty") > -1)
+	    imgSrc ="none";                                           
+ 	else imgSrc = tempImgSrc.substring(tempImgSrc.length - 6); //imgSrc now conteins the name of the pice we clicked, if there is no pice, imgSrc equals to 'none'
+ 	var cords = divs[index ].id; // cords now conteinds the coordinat of the div
+ 	/*
+	//logic in following lines
+	first we chack if clicked div is a pice or it's empty.
+	if it's a pice : we chack all the div's and try to find
+	a selected div, if there is no selected div, we select 
+	the one is clicked and exit the function. if there is a 
+	selected div, than we call kill(index) function, which will
+	move our selected pice to new position and kill the pice that is 
+	on the new position (if they have different colors)
+	if empty div is clicked: we chack all the divs and try to find
+	selected div, if there is no selected div, we just exit the function,
+	if there is a selected div, we call moveTo(index) function which will move
+	the pice to the new position 
+ 	*/
+ 	if (imgSrc != "none") // if pice is clicked 
+ 	{
+ 		var indexOfSelectedDiv = -1;
+ 		var thereIsSelectedDiv = false;
+ 		for (var i = 0; i < 64; i ++)
+ 		{
+ 			if (divs[i+2].className == "selected")
+ 			{
+ 				thereIsSelectedDiv = true;
+ 				indexOfSelectedDiv = i + 2;
+ 				break;
+ 			}
+
+ 		}
+ 		if(thereIsSelectedDiv)
+ 		{
+ 			kill(index, indexOfSelectedDiv);
+ 			return;
+ 		}
+ 		else
+ 		{
+ 		if (imgSrc.indexOf('w') > -1 && WhiteCanMove)
+ 			{  
+
+ 				WhiteCanMove = false;
+ 				BlackCanMove = true;
+ 				selectDiv(index)
+ 				return;
+ 			}
+ 		if (imgSrc.indexOf('b') > -1 && BlackCanMove)
+ 			{ 
+
+ 				WhiteCanMove = true;
+ 				BlackCanMove = false;
+ 				selectDiv(index)
+ 				return;
+ 			}
+ 		}	
+ 	}
+ 	else //if empty square is clicked
+ 	{
+ 		var indexOfSelectedDiv = -1;
+ 		var thereIsSelectedDiv = false;
+ 		for (var i = 0; i < 64; i ++)
+ 		{
+ 			if (divs[i+2].className == "selected")
+ 			{
+ 				thereIsSelectedDiv = true;
+ 				indexOfSelectedDiv = i+2;
+ 				break;
+ 			}
+
+ 		}
+ 		if(thereIsSelectedDiv)
+ 		{
+ 			move(index, indexOfSelectedDiv);
+ 			return;
+ 		}
+ 		else return;
+ 	}
+}
+function selectDiv(index)
+{
+	//alert("selectDiv works");
+	var divs = document.getElementsByTagName("div");
+	color_of_selected_square_before_selection = divs[index].className;
+	divs[index].className = "selected";
+	// if (BlackCanMove)
+ //   	whiteInterval = setInterval(function (){incrementTime("w")}, 1000);
+ //   	else blackInterval = setInterval(function (){incrementTime("b")}, 1000);
+}
+function move(toIndex, fromIndex) //must deselect selected square  before move
+{ // toIndex and fromIndex start from 2 index
+	var divs = document.getElementsByTagName("div"); 
+ 	var imgs = document.getElementsByTagName("img"); 
+ 		var fromDiv = divs[fromIndex];
+ 	fromDiv.className = color_of_selected_square_before_selection;
+ 	color_of_selected_square_before_selection = "not set";
+ 	imgs[toIndex-2].src = imgs[fromIndex - 2].src;
+ 	imgs[fromIndex-2].src = "empty.png";
+ 	if(BlackCanMove)
+ 	{
+ 		clearInterval(whiteInterval);
+ 		blackInterval =  setInterval(function (){incrementTime("b")}, 1000);
+ 	}
+ 	if(WhiteCanMove)
+ 	{
+ 		clearInterval(blackInterval);
+ 		whiteInterval = setInterval(function (){incrementTime("w")}, 1000);
+
+ 	}
+
+ 	 	
+}
+function kill(victimIndex, killerIndex) // must deselect selected square before kill
+{
+	var divs = document.getElementsByTagName("div"); 
+ 	var imgs = document.getElementsByTagName("img");
+ 	var victimColor = imgs[victimIndex - 2].src.substring(imgs[victimIndex - 2].src.length - 6, imgs[victimIndex - 2].src.length - 5);
+ 	var killerColor = imgs[killerIndex - 2].src.substring(imgs[killerIndex - 2].src.length - 6, imgs[killerIndex - 2].src.length - 5);
+  		var killerDiv = divs[killerIndex];
+  	killerDiv.className = color_of_selected_square_before_selection;
+  	color_of_selected_square_before_selection = "not set";
+  	if (victimColor != killerColor)
+  	{
+  	var victimType = imgs[victimIndex - 2].src.substring(imgs[victimIndex - 2].src.length - 5, imgs[victimIndex - 2].src.length - 4);
+  		if (victimType == "K" && victimColor == 'w')
+  		{
+  			var bool = confirm("blak won, restart?")
+  			if(bool)
+  				location.reload();
+  			else{
+  				BlackCanMove = false;
+  				WhiteCanMove = false;
+				clearInterval(whiteInterval);
+				clearInterval(blackInterval);
+  			}
+  				
+  			
+  		}
+  		if (victimType =="K" && victimColor == 'b')
+  		{
+  			var bool = confirm("white won, restart?");
+  			if(bool)
+  				location.reload();
+  			else{
+  				BlackCanMove = false;
+  				WhiteCanMove = false;
+				clearInterval(whiteInterval);
+				clearInterval(blackInterval);
+  			}
+  				
+  				
+  		}
+  		 imgs[victimIndex - 2].src = imgs[killerIndex - 2].src;
+  		 imgs[killerIndex - 2].src = "empty.png";
+
+	}
+	if (victimColor == killerColor && killerColor == "w")
+	{
+		WhiteCanMove = true;
+		BlackCanMove = false;
+	}
+	if (victimColor == killerColor && killerColor == "b")
+	{
+		BlackCanMove = true;
+		WhiteCanMove = false;
+	}
+	if(BlackCanMove)
+ 	{
+ 		clearInterval(whiteInterval);
+ 		blackInterval =  setInterval(function (){incrementTime("b")}, 1000);
+ 	}
+ 	if(WhiteCanMove)
+ 	{
+ 		clearInterval(blackInterval);
+ 		whiteInterval = setInterval(function (){incrementTime("w")}, 1000);
+
+ 	}
+
+
+}
+function incrementTime(color)
+{
+	var curTime;
+	if (color == "w")
+		curTime = document.getElementById("whiteTimer").innerHTML;
+	else curTime = document.getElementById("blackTimer").innerHTML;
+	var hows, mins, secs;
+	hows = curTime.substring(0,2);
+	mins = curTime.substring(5,7);
+	secs = curTime.substring(10,12);
+	if (mins =='59' && secs == '59')
+	{
+		hows = incrementSubTime(hows);
+		mins = incrementSubTime(mins);
+		secs = incrementSubTime(secs);
+	}
+	if(secs == '59')
+	{
+
+		mins = incrementSubTime(mins);
+		secs = incrementSubTime(secs);
+	}
+	else{
+		secs = incrementSubTime(secs);
+	}
+
+	var output = hows + ' ' + ':' + ' ' + mins + ' ' + ':' + ' ' + secs;
+	if (color == "w")
+		document.getElementById("whiteTimer").innerHTML = output;
+	else
+		document.getElementById("blackTimer").innerHTML = output;
+}
+function incrementSubTime(subTime)
+{
+	var subTimeChanged = false;
+	var sub1 = subTime.substring(0,1);
+	var sub2 = subTime.substring(1);
+	if(sub1 == '0' && sub2 != '9')
+	{
+		sub2++;
+		sub2.toString();
+
+	}
+	if(sub1 == '0' && sub2 == '9')
+	{
+		sub2 = '0';
+		sub1++;
+		sub1.toString();
+		sub2.toString();
+	}
+	if(subTime == '59')
+	{
+		subTime = '00';
+		subTimeChanged = true;
+	}
+	if(subTime >= '10' && subTime != '59')
+	{
+		subTime++;
+		subTimeChanged = true;
+	}
+	
+	if (!subTimeChanged)
+	subTime = sub1 + sub2;
+
+	return subTime;
+
+}
+
+setPices();
+whiteInterval = setInterval(function (){incrementTime("w")}, 1000);
+
+
+</script>
+</body>
+</html>​
